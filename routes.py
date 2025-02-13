@@ -8,7 +8,14 @@ from datetime import datetime, timedelta
 @app.route('/player', methods=['POST'])
 def create_player():
     data = request.json
-    new_player = Player(username=data['username'])
+    new_player = Player(
+        username=data['username'],
+        vip_level=data.get('vip_level', 0),
+        luck=data.get('luck', 0),
+        attack=data.get('attack', 10),
+        defense=data.get('defense', 10),
+        speed=data.get('speed', 10)
+    )
     db.session.add(new_player)
     db.session.commit()
     return jsonify({'message': 'Player created', 'player_id': new_player.id}), 201
