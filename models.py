@@ -11,6 +11,8 @@ class Player(db.Model):
     attack = db.Column(db.Integer, default=10)
     defense = db.Column(db.Integer, default=10)
     speed = db.Column(db.Integer, default=10)
+    luck = db.Column(db.Integer, default=0)  # 新增幸运值属性
+    vip_level = db.Column(db.Integer, default=0)  # 新增VIP等级
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     items = db.relationship('Item', backref='player', lazy=True)
     events = db.relationship('Event', backref='player', lazy=True)
