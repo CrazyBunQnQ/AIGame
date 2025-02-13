@@ -1,0 +1,99 @@
+# AIGame - 概率元素挂机游戏后端服务
+
+## 概述
+基于Python+MySQL开发的挂机游戏后端服务，融合随机事件、概率战斗、抽卡合成等机制，提供丰富的概率驱动玩法。
+
+## 核心功能
+
+### 1. 随机事件系统
+- 🎲 普通事件（60%触发概率）
+  - 宝箱发现（30%获得金币/20%获得材料/10%装备）
+  - 怪物袭击（战斗胜利率=攻击/(攻击+怪物防御)）
+  - 天气变化（影响资源获取概率±15%）
+- 🌟 特殊事件（5%触发概率）
+  - 隐藏BOSS（掉落SSR装备概率0.1%）
+  - 时空裂隙（限时任务完成奖励×3）
+
+### 2. 角色成长系统
+- 📈 属性随机成长（升级时攻击/防御/速度+1~3）
+- 🛡️ 装备掉落分级（N/R/SR/SSR 概率 70%/25%/4%/1%）
+- 🔄 概率突破机制（+10强化成功率50%并逐级递减）
+
+### 3. 自动战斗系统
+- ⚔️ 战斗公式：`胜率 = (攻击²)/(攻击² + 敌方防御²) ± 10%随机浮动`
+- 🤖 自动巡逻（每小时触发3-5次随机遭遇）
+- 👥 PvP遭遇（在线玩家匹配概率：同等级段20%）
+
+### 4. 抽卡合成系统
+- 🃏 卡池概率配置：
+  ```json
+  {
+    "N": 70,
+    "R": 25, 
+    "SR": 4.9,
+    "SSR": 0.1
+  }
+  ```
+- 🔥 熔炉系统（3件SR=30%概率合成SSR）
+
+### 5. 经济系统
+- 💰 离线收益公式：`基础值 × (1 + VIP等级×0.2) × 随机系数(0.8-1.2)`
+- 📈 市场波动（每小时价格变化±5%）
+
+## 技术架构
+- Python 3.10+
+- Flask框架
+- MySQL 8.0+
+- SQLAlchemy ORM
+
+## 数据库设计
+```sql
+CREATE DATABASE aigame;
+CREATE TABLE players (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    level INT DEFAULT 1,
+    exp BIGINT DEFAULT 0,
+    attack INT DEFAULT 5,
+    defense INT DEFAULT 5,
+    last_active TIMESTAMP
+);
+
+CREATE TABLE inventory (
+    player_id INT,
+    item_type ENUM('WEAPON','ARMOR','MATERIAL'),
+    rarity ENUM('N','R','SR','SSR'),
+    count INT,
+    FOREIGN KEY (player_id) REFERENCES players(id)
+);
+```
+
+## 快速开始
+1. 安装依赖：
+```bash
+pip install flask sqlalchemy mysql-connector-python
+```
+
+2. 配置数据库：
+```bash
+mysql -u root -p -e "CREATE USER 'aigame'@'localhost' IDENTIFIED BY 'password';"
+mysql -u root -p -e "GRANT ALL PRIVILEGES ON aigame.* TO 'aigame'@'localhost';"
+```
+
+3. 启动服务：
+```python
+FLASK_APP=main.py flask run --host=0.0.0.0 --port=53742
+```
+
+## API示例
+```python
+@app.route('/gacha', methods=['POST'])
+def gacha():
+    # 抽卡逻辑实现
+    return jsonify({
+        'result': random.choices(
+            ['N','R','SR','SSR'], 
+            weights=[70,25,4.9,0.1], 
+            k=1
+        )[0]
+    })
+```
