@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask import request, jsonify
-from app import app
+from main import app, db
 from models import Player, Item, Event
 import random
 from datetime import datetime, timedelta
