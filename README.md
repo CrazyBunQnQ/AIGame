@@ -63,6 +63,47 @@ sudo apt-get install -y default-mysql-client
 - 💰 离线收益公式：`基础值 × (1 + VIP等级×0.2) × 随机系数(0.8-1.2)`
 - 📈 市场波动（每小时价格变化±5%）
 
+## 事件系统
+
+### Event Engine 设计
+
+事件引擎提供了一个灵活的事件驱动架构，允许在游戏的不同模块之间进行解耦通信。主要功能包括：
+
+1. **事件注册**
+   ```python
+   event_engine.register_event(event_name, callback)
+   ```
+   注册一个事件监听器，当指定事件触发时执行回调函数
+
+2. **事件触发**
+   ```python
+   event_engine.trigger_event(event_name, *args, **kwargs)
+   ```
+   触发指定事件，并传递任意参数给注册的回调函数
+
+3. **事件移除**
+   ```python
+   event_engine.remove_event(event_name, callback=None)
+   ```
+   移除指定事件的监听器，如果未指定callback则移除该事件的所有监听器
+
+### 使用示例
+
+```python
+from services import event_engine
+
+# 注册事件
+def on_player_login(player):
+    print(f"Player logged in: {player.name}")
+event_engine.register_event('player_login', on_player_login)
+
+# 触发事件
+event_engine.trigger_event('player_login', current_player)
+
+# 移除事件
+event_engine.remove_event('player_login', on_player_login)
+```
+
 ## 技术架构
 - Python 3.10+
 - Flask框架
