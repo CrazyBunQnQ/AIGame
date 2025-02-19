@@ -11,6 +11,15 @@ pip install -r requirements.txt
 # 安装 MySQL 客户端
 sudo apt-get update
 sudo apt-get install -y default-mysql-client
+
+# 创建 .env 文件并配置数据库连接信息
+# 示例 .env 文件内容：
+# DB_USER=your_database_user
+# DB_PASSWORD=your_database_password
+# DB_HOST=your_database_host
+# DB_PORT=your_database_port
+# DB_NAME=your_database_name
+```
 ```
 
 ## 概述
