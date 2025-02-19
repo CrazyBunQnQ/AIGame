@@ -1,5 +1,18 @@
 # AIGame - 概率元素挂机游戏后端服务
 
+## 环境准备
+
+在开始之前，请确保已安装以下依赖：
+
+```bash
+# 安装 Python 依赖
+pip install -r requirements.txt
+
+# 安装 MySQL 客户端
+sudo apt-get update
+sudo apt-get install -y default-mysql-client
+```
+
 ## 概述
 基于Python+MySQL开发的挂机游戏后端服务，融合随机事件、概率战斗、抽卡合成等机制，提供丰富的概率驱动玩法。
 
