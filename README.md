@@ -91,18 +91,7 @@ CREATE TABLE inventory (
 ```
 
 ## 快速开始
-1. 安装依赖：
-```bash
-pip install flask sqlalchemy mysql-connector-python
-```
-
-2. 配置数据库：
-```bash
-mysql -u root -p -e "CREATE USER 'aigame'@'localhost' IDENTIFIED BY 'password';"
-mysql -u root -p -e "GRANT ALL PRIVILEGES ON aigame.* TO 'aigame'@'localhost';"
-```
-
-3. 启动服务：
+1. 启动服务：
 ```python
 FLASK_APP=main.py flask run --host=0.0.0.0 --port=53742
 ```
