@@ -6,7 +6,7 @@
 
 ```bash
 # 安装 Python 依赖
-pip install flask sqlalchemy mysql-connector-python flask-sqlalchemy flask-cors mysqlclient
+pip install -r requirements.txt
 
 # 安装 MySQL 客户端
 sudo apt-get update
